@@ -1,0 +1,117 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f2f2f2;
+  font-family: "Segoe UI", sans-serif;
+  padding: 2rem;
+}
+
+.auth-card {
+  width: min(980px, 100%);
+  min-height: 460px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  background: #fff;
+}
+
+.card-image {
+  background-image: url("https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=80");
+  background-position: center;
+  background-size: cover;
+  min-height: 460px;
+}
+
+.card-form-panel {
+  background: #f7f7f7;
+  padding: 2.2rem 2rem;
+}
+
+.card-form-panel h2 {
+  color: #2c7a35;
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 1.4rem;
+}
+
+.card-form-panel h3 {
+  font-size: 1.9rem;
+  color: #111;
+  margin: 1.2rem 0 1rem;
+}
+
+.toggle-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.toggle-buttons button {
+  padding: 0.65rem 0.8rem;
+  border: 1px solid #d7d7d7;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #595959;
+}
+
+.toggle-buttons button.active {
+  background: #f3bd2b;
+  border-color: #f3bd2b;
+  color: #1e1e1e;
+}
+
+form .form-group {
+  margin-bottom: 0.75rem;
+}
+
+form .form-group label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.82rem;
+  color: #333;
+  font-weight: 500;
+}
+
+form .form-group input {
+  width: 100%;
+  border: 1px solid #d8d8d8;
+  border-radius: 7px;
+  background: #ececec;
+  padding: 0.72rem 0.8rem;
+  font-size: 0.92rem;
+}
+
+form .form-group input:focus {
+  outline: none;
+  border-color: #c8c8c8;
+}
+
+.submit-btn {
+  margin-top: 0.8rem;
+  width: 100%;
+  border: none;
+  border-radius: 7px;
+  background: #f3bd2b;
+  color: #101010;
+  padding: 0.78rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 860px) {
+  .auth-card {
+    grid-template-columns: 1fr;
+  }
+
+  .card-image {
+    min-height: 240px;
+  }
+}
