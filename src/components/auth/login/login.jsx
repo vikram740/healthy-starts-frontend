@@ -1,60 +1,181 @@
 import { useState } from "react";
-import "./login.scss";
+import "./login.css";
+
+const loginInitialState = {
+  username: "",
+  password: "",
+};
+
+const registerInitialState = {
+  name: "",
+  phone: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 export default function Login() {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+  const [activeTab, setActiveTab] = useState("login");
+  const [loginForm, setLoginForm] = useState(loginInitialState);
+  const [registerForm, setRegisterForm] = useState(registerInitialState);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+  };
+
+  const handleLoginChange = (e) => {
+    setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
+  };
+
+  const handleRegisterChange = (e) => {
+    setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // TEMP: API call will be added later
-    console.log("Login Data:", form);
+    if (activeTab === "login") {
+      console.log("Login Data:", loginForm);
+      return;
+    }
+
+    console.log("Register Data:", registerForm);
   };
 
   return (
     <div className="login-container">
-      <div className="login-card">
-        <h2>Healthy Starts Every Single Day</h2>
-        <p className="subtitle">Login to your account</p>
+      <div className="auth-card">
+        <div className="card-image" aria-hidden="true" />
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter email"
-              value={form.email}
-              onChange={handleChange}
-              required
-            />
+        <div className="card-form-panel">
+          <h2>Fresh salads, delivered daily.</h2>
+
+          <div className="toggle-buttons" role="tablist" aria-label="Authentication mode">
+            <button
+              type="button"
+              role="tab"
+              className={activeTab === "login" ? "active" : ""}
+              aria-selected={activeTab === "login"}
+              onClick={() => handleTabChange("login")}
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              role="tab"
+              className={activeTab === "register" ? "active" : ""}
+              aria-selected={activeTab === "register"}
+              onClick={() => handleTabChange("register")}
+            >
+              Register
+            </button>
           </div>
 
-          <div className="form-group">
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter password"
-              value={form.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <h3>{activeTab === "login" ? "Login" : "Create Account"}</h3>
 
-          <button type="submit">Login</button>
+          <form onSubmit={handleSubmit}>
+            {activeTab === "login" ? (
+              <>
+                <div className="form-group">
+                  <label htmlFor="username">Username</label>
+                  <input
+                    id="username"
+                    type="text"
+                    name="username"
+                    placeholder="Enter username"
+                    value={loginForm.username}
+                    onChange={handleLoginChange}
+                    required
+                  />
+                </div>
 
-          <div className="links">
-            <span>Forgot password?</span>
-          </div>
-        </form>
+                <div className="form-group">
+                  <label htmlFor="login-password">Password</label>
+                  <input
+                    id="login-password"
+                    type="password"
+                    name="password"
+                    placeholder="Enter password"
+                    value={loginForm.password}
+                    onChange={handleLoginChange}
+                    required
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="form-group">
+                  <label htmlFor="name">Name</label>
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    placeholder="Enter full name"
+                    value={registerForm.name}
+                    onChange={handleRegisterChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="phone">Phone</label>
+                  <input
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    placeholder="Enter phone number"
+                    value={registerForm.phone}
+                    onChange={handleRegisterChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="Enter email"
+                    value={registerForm.email}
+                    onChange={handleRegisterChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="register-password">Password</label>
+                  <input
+                    id="register-password"
+                    type="password"
+                    name="password"
+                    placeholder="Enter password"
+                    value={registerForm.password}
+                    onChange={handleRegisterChange}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="confirm-password">Confirm Password</label>
+                  <input
+                    id="confirm-password"
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="Confirm password"
+                    value={registerForm.confirmPassword}
+                    onChange={handleRegisterChange}
+                    required
+                  />
+                </div>
+              </>
+            )}
+
+            <button type="submit" className="submit-btn">
+              {activeTab === "login" ? "Login" : "Register"}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
