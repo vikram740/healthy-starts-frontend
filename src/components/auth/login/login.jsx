@@ -14,13 +14,20 @@ const registerInitialState = {
   confirmPassword: "",
 };
 
+const otpInitialState = {
+  otp: "",
+};
+
 export default function Login() {
   const [activeTab, setActiveTab] = useState("login");
+  const [authStep, setAuthStep] = useState("form");
   const [loginForm, setLoginForm] = useState(loginInitialState);
   const [registerForm, setRegisterForm] = useState(registerInitialState);
+  const [otpForm, setOtpForm] = useState(otpInitialState);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
+    setAuthStep("form");
   };
 
   const handleLoginChange = (e) => {
@@ -31,6 +38,10 @@ export default function Login() {
     setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
   };
 
+  const handleOtpChange = (e) => {
+    setOtpForm({ ...otpForm, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -39,7 +50,13 @@ export default function Login() {
       return;
     }
 
-    console.log("Register Data:", registerForm);
+    if (authStep === "form") {
+      console.log("Register Data:", registerForm);
+      setAuthStep("otp");
+      return;
+    }
+
+    console.log("OTP Submitted:", otpForm);
   };
 
   return (
@@ -50,28 +67,32 @@ export default function Login() {
         <div className="card-form-panel">
           <h2>Fresh salads, delivered daily.</h2>
 
-          <div className="toggle-buttons" role="tablist" aria-label="Authentication mode">
-            <button
-              type="button"
-              role="tab"
-              className={activeTab === "login" ? "active" : ""}
-              aria-selected={activeTab === "login"}
-              onClick={() => handleTabChange("login")}
-            >
-              Login
-            </button>
-            <button
-              type="button"
-              role="tab"
-              className={activeTab === "register" ? "active" : ""}
-              aria-selected={activeTab === "register"}
-              onClick={() => handleTabChange("register")}
-            >
-              Register
-            </button>
-          </div>
+          {authStep === "form" && (
+            <div className="toggle-buttons" role="tablist" aria-label="Authentication mode">
+              <button
+                type="button"
+                role="tab"
+                className={activeTab === "login" ? "active" : ""}
+                aria-selected={activeTab === "login"}
+                onClick={() => handleTabChange("login")}
+              >
+                Login
+              </button>
+              <button
+                type="button"
+                role="tab"
+                className={activeTab === "register" ? "active" : ""}
+                aria-selected={activeTab === "register"}
+                onClick={() => handleTabChange("register")}
+              >
+                Register
+              </button>
+            </div>
+          )}
 
-          <h3>{activeTab === "login" ? "Login" : "Create Account"}</h3>
+          <h3>
+            {activeTab === "login" ? "Login" : authStep === "otp" ? "Verify OTP" : "Create Account"}
+          </h3>
 
           <form onSubmit={handleSubmit}>
             {activeTab === "login" ? (
@@ -101,6 +122,29 @@ export default function Login() {
                     required
                   />
                 </div>
+              </>
+            ) : authStep === "otp" ? (
+              <>
+                <div className="form-group">
+                  <label htmlFor="otp">OTP</label>
+                  <input
+                    id="otp"
+                    type="text"
+                    name="otp"
+                    placeholder="enter OTP"
+                    value={otpForm.otp}
+                    onChange={handleOtpChange}
+                    required
+                  />
+                </div>
+
+                <p className="otp-resend-row">
+                  <span>Didn&apos;t Receive OTP?</span>
+                  <button type="button" className="resend-btn">
+                    RESEND OTP
+                  </button>
+                  <span>0s</span>
+                </p>
               </>
             ) : (
               <>
@@ -172,7 +216,7 @@ export default function Login() {
             )}
 
             <button type="submit" className="submit-btn">
-              {activeTab === "login" ? "Login" : "Register"}
+              {activeTab === "login" ? "Login" : authStep === "otp" ? "Submit OTP" : "Register"}
             </button>
           </form>
         </div>
