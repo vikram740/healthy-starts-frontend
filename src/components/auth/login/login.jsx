@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./login.css";
+import VerifyOtp from "../verifyOtp/verifyOtp";
 
 const loginInitialState = {
   username: "",
@@ -124,28 +125,7 @@ export default function Login() {
                 </div>
               </>
             ) : authStep === "otp" ? (
-              <>
-                <div className="form-group">
-                  <label htmlFor="otp">OTP</label>
-                  <input
-                    id="otp"
-                    type="text"
-                    name="otp"
-                    placeholder="enter OTP"
-                    value={otpForm.otp}
-                    onChange={handleOtpChange}
-                    required
-                  />
-                </div>
-
-                <p className="otp-resend-row">
-                  <span>Didn&apos;t Receive OTP?</span>
-                  <button type="button" className="resend-btn">
-                    RESEND OTP
-                  </button>
-                  <span>0s</span>
-                </p>
-              </>
+              <VerifyOtp otp={otpForm.otp} onOtpChange={handleOtpChange} />
             ) : (
               <>
                 <div className="form-group">

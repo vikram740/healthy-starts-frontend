@@ -106,26 +106,6 @@ form .form-group input:focus {
   cursor: pointer;
 }
 
-.otp-resend-row {
-  margin: 0.4rem 0 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.8rem;
-  color: #9a9a9a;
-}
-
-.resend-btn {
-  border: 0;
-  background: transparent;
-  color: #f3bd2b;
-  font-size: 0.75rem;
-  font-weight: 700;
-  cursor: pointer;
-  padding: 0;
-}
-
 @media (max-width: 860px) {
   .auth-card {
     grid-template-columns: 1fr;
